@@ -10,11 +10,11 @@ export function NavBar() {
         </Link>
 
         <nav>
-          <Link href={"/"}>
-            <h1>Log in</h1>
+          <Link href={"/login"}>
+            <p>Log in</p>
           </Link>
-          <Link href={"/"}>
-            <h1>use Kan-Ban!</h1>
+          <Link href={"/register"} className={styles.registerButton}>
+            <p>use Kan-Ban!</p>
           </Link>
         </nav>
       </section>

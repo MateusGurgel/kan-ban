@@ -26,6 +26,30 @@
 .content nav{
 
     display: flex;
+
+    align-items: center;
+
     gap: 30px;
+
+}
+
+
+.registerButton {
+
+    border-radius: 2px;
+    padding: 5px 10px;
+
+    border: black 1px solid;
+    background-color: black;
+    color: white;
+
+    transition: 0.3s;
+}
+
+
+.registerButton:hover {
+
+    background-color: white;
+    color: black;
 
 }
