@@ -1,18 +1,23 @@
-import styles from "./styles.module.css"
-
+import Link from "next/link";
+import styles from "./styles.module.css";
 
 export function NavBar() {
-    return (
+  return (
     <header className={styles.header}>
-        <section className={styles.content}>    
-            <h1>Header</h1>
+      <section className={styles.content}>
+        <Link href={"/"}>
+          <h1>Kan-Ban!</h1>
+        </Link>
 
-            <nav>
-                <h1>Header</h1>
-                <h1>Header</h1>
-
-            </nav>
-
-        </section>
-    </header>)
+        <nav>
+          <Link href={"/"}>
+            <h1>Log in</h1>
+          </Link>
+          <Link href={"/"}>
+            <h1>use Kan-Ban!</h1>
+          </Link>
+        </nav>
+      </section>
+    </header>
+  );
 }
