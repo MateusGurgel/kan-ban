@@ -9,5 +9,23 @@
 
     display: flex;
     align-items: center;
+    justify-content: center;
+
+}
+
+.content {
+
+    width: 100%;
+    max-width: 1828px;;
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.content nav{
+
+    display: flex;
+    gap: 30px;
 
 }
