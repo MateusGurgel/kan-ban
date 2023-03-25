@@ -13,7 +13,7 @@ export function NavBar() {
           <Link href={"/login"}>
             <p>Log in</p>
           </Link>
-          <Link href={"/register"} className={styles.registerButton}>
+          <Link href={"/register"} className="blackLink">
             <p>use Kan-Ban!</p>
           </Link>
         </nav>
