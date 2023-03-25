@@ -15,3 +15,42 @@ a {
   text-decoration: none;
 }
 
+input{
+  height: 60px;
+  width: 100%;
+
+  padding: 0 10px;
+
+  border: 1px solid #000000;
+  border-radius: 2px;
+
+  font-size: 16px;
+
+  background-color: transparent;
+}
+
+input[type="submit"]{
+  background: #000000;
+  color: white;
+}
+
+
+.blackLink {
+
+  padding: 5px 10px;
+  
+  border: black 1px solid;
+  border-radius: 4px;
+  background-color: black;
+  color: white;
+
+  transition: 0.3s;
+}
+
+
+.blackLink:hover {
+
+  background-color: white;
+  color: black;
+
+}
