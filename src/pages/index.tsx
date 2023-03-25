@@ -1,4 +1,9 @@
-import Head from 'next/head'
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+
+import kanBan from "../../public/KanBan.png";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -10,9 +15,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>
-        ABOGUs
-      </h1>
+      <section className={styles.content}>
+        <div>
+          <h1 className={styles.title}>Make your life easier!</h1>
+          <p>
+            Notion is the connected workspace where better, faster work happens.
+          </p>
+        </div>
+
+        <div style={{ display: "flex" }}>
+          <Link href={"/register"} className="blackLink">
+            <p>Use Kan-Ban! for Free</p>
+          </Link>
+        </div>
+        <Image
+          priority
+          className={styles.image}
+          width={613}
+          height={437}
+          src={kanBan}
+          alt="KanBan Photo"
+        />
+        
+      </section>
     </>
-  )
+  );
 }
