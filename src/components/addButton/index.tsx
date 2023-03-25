@@ -12,9 +12,9 @@ export default function AddButton(props: AddButtonProps) {
     <button 
     onClick={props.onClick} 
     disabled={props.disabled}
-    
+    className={styles.addButton}
     >
-      {props.children}{" "}
+      {props.children}
     </button>
   );
 }

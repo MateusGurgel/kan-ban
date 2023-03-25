@@ -1,17 +1,15 @@
-button {
-    font-size: 20px;
-    width: 100%;
-    min-height: 80px;
-    
-    border-radius: 2px;
-    border: 1px solid #000;
-    color: #000;
+.addButton {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #D9D9D9;
+    color: #D9D9D9;
     background-color: transparent;
-    transition: 0.4s;
   }
   
-  button:hover {
-    border: 1px solid #fff;
-    color: #fff;
-    background-color: #000;
+  .addButton:hover {
+    border: 2px dashed #000;
+    color: #000;
+    background-color: transparent;
   }
