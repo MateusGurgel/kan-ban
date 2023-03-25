@@ -26,19 +26,4 @@
     font-size: 20px;
 }
 
-.addButton  {
-    font-size: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px dashed #D9D9D9;
-    color: #D9D9D9;
-    background-color: transparent;
-}
 
-.addButton:hover {
-
-    border: 2px dashed #000;
-    color: #000;
-    background-color: transparent;
-}

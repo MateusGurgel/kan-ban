@@ -1,3 +1,4 @@
+import AddButton from "@/components/addButton";
 import Head from "next/head";
 import {BiPlus} from "react-icons/bi"
 import styles from "../styles/Dashboard.module.css";
@@ -23,7 +24,7 @@ export default function Login() {
         <button>Task</button>
         <button>Task</button>
         <button>Task</button>
-        <button className={styles.addButton}><BiPlus/></button>
+        <AddButton><BiPlus/></AddButton>
       </div>
     </div>
   );
