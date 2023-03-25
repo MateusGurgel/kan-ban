@@ -20,7 +20,9 @@ export default function Login() {
       <div className={styles.dashboardCard}>
         <h1>my kanbans</h1>
 
-        <button className={styles.KanBanbutton}>Task</button>
+        <button>Task</button>
+        <button>Task</button>
+        <button>Task</button>
         <button className={styles.addButton}><BiPlus/></button>
       </div>
     </div>
