@@ -22,7 +22,7 @@
 }
 
 .listHeader{
-    height: 91px;
+    min-height: 91px;
     width: 400px;
 
     display: flex;
