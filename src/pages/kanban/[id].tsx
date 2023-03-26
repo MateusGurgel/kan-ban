@@ -1,4 +1,5 @@
 import AddButton from "@/components/addButton";
+import { Task } from "@/components/task";
 import Head from "next/head";
 import styles from "./../../styles/KanBan.module.css";
 
@@ -15,7 +16,6 @@ export default function kanban() {
      <div className={styles.list}>
         <div className={styles.listHeader}>To do</div>
         <AddButton/>
-
      </div>
 
      <div className={styles.list}>
