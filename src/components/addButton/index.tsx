@@ -1,8 +1,8 @@
 import styles from "./styles.module.css";
+import {BiPlus} from "react-icons/bi"
 import { ReactNode } from "react";
 
 interface AddButtonProps {
-  children: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
 }
@@ -14,7 +14,7 @@ export default function AddButton(props: AddButtonProps) {
     disabled={props.disabled}
     className={styles.addButton}
     >
-      {props.children}
+      <BiPlus/>
     </button>
   );
 }
