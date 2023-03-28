@@ -32,6 +32,12 @@ input{
 input[type="submit"]{
   background: #000000;
   color: white;
+  transition: 0.4s;
+}
+
+input[type="submit"]:hover{
+  background: #fff;
+  color: black;
 }
 
 button {
