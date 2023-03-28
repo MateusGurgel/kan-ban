@@ -1,0 +1,19 @@
+.blackLink {
+
+    padding: 5px 10px;
+    
+    border: black 1px solid;
+    border-radius: 4px;
+    background-color: black;
+    color: white;
+  
+    transition: 0.3s;
+  }
+  
+  
+  .blackLink:hover {
+  
+    background-color: white;
+    color: black;
+  
+  }

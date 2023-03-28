@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import kanBan from "../../public/KanBan.png";
 import styles from "../styles/Home.module.css";
 import useIsMobile  from "@/hooks/useIsMobile";
+import BlackLink from "@/components/blackLink";
 
 const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
 
@@ -49,9 +50,9 @@ export default function Home() {
         </div>
 
         <div style={{ display: "flex" }}>
-          <Link href={"/register"} className="blackLink">
+          <BlackLink href={"/register"}>
             <p>Use Kan-Ban! for Free</p>
-          </Link>
+          </BlackLink>
         </div>
 
         <motion.div

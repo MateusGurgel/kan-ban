@@ -1,3 +1,4 @@
+import BlackLink from "@/components/blackLink";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./styles.module.css";
@@ -17,9 +18,9 @@ export function NavBar() {
             <Link href={"/login"}>
               <p>Log in</p>
             </Link>
-            <Link href={"/register"} className="blackLink">
+            <BlackLink href={"/register"}>
               <p>use Kan-Ban!</p>
-            </Link>
+            </BlackLink>
           </nav>
         )}
       </section>
