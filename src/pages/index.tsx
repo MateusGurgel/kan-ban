@@ -1,9 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import kanBan from "../../public/KanBan.png";
 import styles from "../styles/Home.module.css";
+
+const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
 
 export default function Home() {
   return (
@@ -15,12 +18,31 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className={styles.content}>
+      <motion.article
+        className={styles.content}
+        initial="hidden"
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: 0.3 } } }}
+      >
         <div>
-          <h1 className={styles.title}>Make your life easier!</h1>
-          <p>
-            Notion is the connected workspace where better, faster work happens.
-          </p>
+          <motion.h1
+            className={styles.title}
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible,
+            }}
+          >
+            Make your life easier!
+          </motion.h1>
+
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible,
+            }}
+          >
+            Transform your project management approach with Kanban.
+          </motion.p>
         </div>
 
         <div style={{ display: "flex" }}>
@@ -28,16 +50,23 @@ export default function Home() {
             <p>Use Kan-Ban! for Free</p>
           </Link>
         </div>
-        <Image
-          priority
-          className={styles.image}
-          width={613}
-          height={437}
-          src={kanBan}
-          alt="KanBan Photo"
-        />
-        
-      </section>
+
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Image
+            priority
+            className={styles.image}
+            width={613}
+            height={437}
+            src={kanBan}
+            alt="KanBan Photo"
+          />
+        </motion.div>
+      </motion.article>
     </>
   );
 }
