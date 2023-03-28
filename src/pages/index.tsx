@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 import kanBan from "../../public/KanBan.png";
 import styles from "../styles/Home.module.css";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import useIsMobile  from "@/hooks/useIsMobile";
 
 const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
 
