@@ -5,10 +5,13 @@ import { motion } from "framer-motion";
 
 import kanBan from "../../public/KanBan.png";
 import styles from "../styles/Home.module.css";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const visible = { opacity: 1, y: 0, transition: { duration: 0.5 } };
 
 export default function Home() {
+  const isMobile = useIsMobile();
+
   return (
     <>
       <Head>
@@ -57,14 +60,16 @@ export default function Home() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <Image
-            priority
-            className={styles.image}
-            width={613}
-            height={437}
-            src={kanBan}
-            alt="KanBan Photo"
-          />
+          {!isMobile && (
+            <Image
+              priority
+              className={styles.image}
+              width={613}
+              height={437}
+              src={kanBan}
+              alt="KanBan Photo"
+            />
+          )}
         </motion.div>
       </motion.article>
     </>
