@@ -7,16 +7,20 @@ import styles from "../styles/App.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps, router }: AppProps) {
   return (
-    <AnimatePresence>
-      <div className={inter.className}>
-        <Layout>
-          <div className={styles.container}>
-            <Component {...pageProps} />
-          </div>
-        </Layout>
-      </div>
-    </AnimatePresence>
+    <div className={inter.className}>
+      <Layout>
+        <div className={styles.container}>
+          <AnimatePresence
+            mode="wait"
+            initial={false}
+            onExitComplete={() => window.scrollTo(0, 0)}
+          >
+            <Component {...pageProps} key={router.asPath} />
+          </AnimatePresence>
+        </div>
+      </Layout>
+    </div>
   );
 }
