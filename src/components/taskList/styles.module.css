@@ -9,7 +9,11 @@
   
     gap: 20px;
   }
-  
+
+  .list ul {
+    list-style-type: none;
+  }
+
   .listHeader {
     min-height: 91px;
     width: 100%;
