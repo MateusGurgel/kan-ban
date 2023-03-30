@@ -2,7 +2,7 @@ import AddButton from "@/components/addButton";
 import Head from "next/head";
 import styles from "./../../styles/KanBan.module.css";
 import useIsMobile from "@/hooks/useIsMobile";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, resetServerContext } from "react-beautiful-dnd";
 import { useState } from "react";
 import { TaskList } from "@/components/taskList";
 
@@ -44,6 +44,7 @@ export default function Kanban() {
   };
 
   function handleOnDragEnd(result: DropResult) {
+    
     if (!result.destination) return;
 
     const destination = result.destination.droppableId;
@@ -103,4 +104,14 @@ export default function Kanban() {
       </div>
     </DragDropContext>
   );
+}
+
+export async function getServerSideProps() {
+  
+  resetServerContext()
+  
+  return {
+    props: {
+    },
+  }
 }
