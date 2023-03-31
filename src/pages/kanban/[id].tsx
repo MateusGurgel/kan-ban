@@ -2,54 +2,83 @@ import AddButton from "@/components/addButton";
 import Head from "next/head";
 import styles from "./../../styles/KanBan.module.css";
 import useIsMobile from "@/hooks/useIsMobile";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { Task } from "@/components/task";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useState } from "react";
 import { TaskList } from "@/components/taskList";
 
-const todos = [
-  {
-    id: "1",
-    task: "Abougs"
-  },
-  {
-    id: "2",
-    task: "Abougs"
-  },
-]
+function GetColumn(column: string) {
+  switch (column) {
+    case "To do":
+      return "To do";
+    case "In progress":
+      return "In progress";
+    case "Done":
+      return "Done";
+    default:
+      console.log("Invalid Destination");
+      return undefined;
+  }
+}
 
-const inProgresss = [
-  {
-    id: "3312",
-    task: "Aasbougs"
-  },
-  {
-    id: "25123",
-    task: "Aboadsugs"
-  },
-]
-
-const dones = [
-  {
-    id: "15324",
-    task: "Abou123gs"
-  },
-  {
-    id: "25654",
-    task: "Abougs213"
-  },
-]
-
+type task = {
+  id: string;
+  task: string;
+};
 
 export default function Kanban() {
   const isMobile = useIsMobile();
 
-  const [todo, setTodo] = useState(todos)
-  const [inProgress, setInProgress] = useState(inProgresss)
-  const [done, set] = useState(dones)
+  const kanban = {
+    "To do": useState<task[]>([
+      { id: "33412", task: "Task1" },
+      { id: "33122", task: "Task2" },
+    ]),
+    "In progress": useState<task[]>([
+      { id: "3341", task: "Task3" },
+      { id: "331722", task: "Task4" },
+    ]),
+    "Done": useState<task[]>([
+      { id: "334129", task: "Task5" },
+      { id: "3312210", task: "Task6" },
+    ]),
+  };
 
   function handleOnDragEnd(result: DropResult) {
-    console.log("Drop")
+    if (!result.destination) return;
+
+    const destination = result.destination.droppableId;
+    const source = result.source.droppableId;
+
+    const destinationColumnName = GetColumn(destination);
+    const sourceColumnName = GetColumn(source);
+
+    if (!destinationColumnName || !sourceColumnName) {
+      return;
+    }
+
+    const [destinationColumn, setDestinationColumn] =
+      kanban[destinationColumnName];
+    const [sourceColumn, setSourceColumn] = kanban[sourceColumnName];
+
+    let destinationArray = Array.from(destinationColumn);
+    let sourceArray = Array.from(sourceColumn);
+
+    console.log(destinationArray);
+    console.log(sourceArray);
+
+    if (destinationColumnName === sourceColumnName) {
+      destinationArray = sourceArray;
+    }
+
+    //remove task from the src array
+    const task = sourceArray.splice(result.source.index, 1);
+
+    //add on the dst array
+    destinationArray.splice(result.destination.index, 0, ...task);
+
+    //save the arrays
+    setDestinationColumn(destinationArray);
+    setSourceColumn(sourceArray);
   }
 
   return (
@@ -59,19 +88,18 @@ export default function Kanban() {
         style={{ flexDirection: isMobile ? "column" : "row" }}
       >
         <Head>
-          <title>Login</title>
+          <title>Dashboard</title>
           <meta name="description" content="kan-ban! aplication" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <TaskList tasks={todo} title="To do">
+        <TaskList tasks={kanban["To do"][0]} title="To do">
           <AddButton />
         </TaskList>
-        
-        <TaskList tasks={inProgress} title="In progress" />
-        <TaskList tasks={done} title="Done" />
 
+        <TaskList tasks={kanban["In progress"][0]} title="In progress" />
+        <TaskList tasks={kanban["Done"][0]} title="Done" />
       </div>
     </DragDropContext>
   );
