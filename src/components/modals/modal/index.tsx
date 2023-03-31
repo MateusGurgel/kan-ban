@@ -26,6 +26,7 @@ export function Modal({ children, show, setShow }: ModalProps) {
     <div className={styles.modal} onClick={closeModal}>
       <div className={styles.modalContent} onClick={preventClosing}>
         <HiXMark
+          color="#000"
           size={30}
           className={styles.closeButton}
           onClick={closeModal}
