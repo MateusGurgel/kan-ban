@@ -64,9 +64,6 @@ export default function Kanban() {
     let destinationArray = Array.from(destinationColumn);
     let sourceArray = Array.from(sourceColumn);
 
-    console.log(destinationArray);
-    console.log(sourceArray);
-
     if (destinationColumnName === sourceColumnName) {
       destinationArray = sourceArray;
     }
