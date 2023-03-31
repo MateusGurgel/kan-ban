@@ -1,9 +1,29 @@
 import AddButton from "@/components/addButton";
+import BlackLink from "@/components/blackLink";
+import { CreateKanBanModal } from "@/components/modals/createKanBanModal";
 import Head from "next/head";
+import Link from "next/link";
+import { useState } from "react";
 import styles from "../styles/Dashboard.module.css";
 
+interface kanban {
+  name: string;
+  id: string;
+}
+
+const kanbansPlaceholder = [
+  { name: "Task", id: "123" },
+  { name: "Task", id: "1234" },
+  { name: "Task", id: "12345s" },
+];
+
 export default function Login() {
-  function createKanBan() {}
+  const [showModal, setShowModal] = useState(false);
+  const [kanbans, setKanbans] = useState<kanban[]>(kanbansPlaceholder);
+
+  function callModal() {
+    setShowModal(true);
+  }
 
   return (
     <div className={styles.dashboardContainer}>
@@ -17,13 +37,19 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <CreateKanBanModal show={showModal} setShow={setShowModal} />
+
       <div className={styles.dashboardCard}>
         <h1>my kanbans</h1>
 
-        <button>Task</button>
-        <button>Task</button>
-        <button>Task</button>
-        <AddButton/>
+        {kanbans.map((kanban) => (
+          <Link key={"kanban"} href={`kanban/${kanban.id}`} style={{width: "100%"}}>
+            <button> 
+            {kanban.name}
+            </button>
+          </Link>
+        ))}
+        <AddButton onClick={callModal} />
       </div>
     </div>
   );
