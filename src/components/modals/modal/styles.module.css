@@ -22,9 +22,10 @@
       padding: 20px;
 
       width: 33%; 
-      min-width: 300px;
+      min-width: 320px;
   }
 
   .closeButton{
+    margin-bottom: 2rem;
     float: right;
   }

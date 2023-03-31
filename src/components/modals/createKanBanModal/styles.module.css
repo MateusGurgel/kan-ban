@@ -1,0 +1,9 @@
+
+.createModalform label{
+    margin-bottom: 10px;
+    display: block;
+}
+
+.createModalform input{
+    display: block;
+}
