@@ -5,6 +5,7 @@ import useIsMobile from "@/hooks/useIsMobile";
 import { DragDropContext, DropResult, resetServerContext } from "react-beautiful-dnd";
 import { useState } from "react";
 import { TaskList } from "@/components/taskList";
+import { CreateTaskModal } from "@/components/modals/createTaskModal";
 
 function GetColumn(column: string) {
   switch (column) {
@@ -27,6 +28,7 @@ type task = {
 
 export default function Kanban() {
   const isMobile = useIsMobile();
+  const [showModal, setShowModal] = useState(false)
 
   const kanban = {
     "To do": useState<task[]>([
@@ -81,6 +83,9 @@ export default function Kanban() {
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
+
+      <CreateTaskModal setShow={setShowModal} show={showModal}/>
+
       <div
         className={styles.kanban}
         style={{ flexDirection: isMobile ? "column" : "row" }}
@@ -93,7 +98,7 @@ export default function Kanban() {
         </Head>
 
         <TaskList tasks={kanban["To do"][0]} title="To do">
-          <AddButton />
+          <AddButton  onClick={() => setShowModal(true)}/>
         </TaskList>
 
         <TaskList tasks={kanban["In progress"][0]} title="In progress" />
