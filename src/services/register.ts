@@ -5,6 +5,16 @@ export async function register(
   password: string,
   confirmPassword: string
 ) {
-  const result = await api.post("/user");
-  return result.data;
+  const data = {
+    email: email,
+    password: password,
+    password_confirmation: confirmPassword,
+  };
+
+  const result = await api
+    .post("/user", data)
+    .then((response) => response.data)
+    .catch((error) => error.response.data);
+
+  return result;
 }

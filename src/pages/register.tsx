@@ -1,27 +1,36 @@
+import styles from "../styles/Register.module.css";
 import Head from "next/head";
 import { ChangeEvent, FormEvent, useState } from "react";
-import styles from "../styles/Register.module.css";
-import axios from 'axios';
 import { register } from "@/services/register";
-
+import { useRouter } from "next/router";
+import { setToken } from "@/services/auth";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const router = useRouter();
 
   async function handleOnSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    setErrorMessage("");
+
     setIsLoading(true);
-
-    const result = await register(email, password, confirmPassword)
-
-    console.log(result)
-
-    
+    const response = await register(email, password, confirmPassword);
     setIsLoading(false);
+
+    if (response.errors) {
+      setErrorMessage(response.errors[0].message);
+      return;
+    }
+
+    setToken(response.token.token)
+    router.push("/dashboard");
   }
 
   function handleEmailChange(event: ChangeEvent<HTMLInputElement>) {
@@ -70,6 +79,8 @@ export default function Register() {
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
+
+          <p>{errorMessage}</p>
 
           <input type={"Submit"} defaultValue={"Submit"} disabled={isLoading} />
         </form>
