@@ -5,4 +5,5 @@
     justify-content: center;
 
     height: calc(100vh - 70px);
+    min-height: 600px;
 }

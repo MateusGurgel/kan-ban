@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import styles from "../styles/App.module.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
