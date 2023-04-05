@@ -3,7 +3,7 @@ import styles from "../styles/Register.module.css";
 
 export default function Register() {
 
-  function handleOnChange() {
+  function handleOnSubmit() {
 
   }
 
@@ -20,7 +20,7 @@ export default function Register() {
 
             <h1>Kan-Ban!</h1>
 
-            <form onSubmit={handleOnChange}>
+            <form onSubmit={handleOnSubmit}>
               <input type={"Email"} placeholder={"email@example.com"}/>
               <input type={"Password"} placeholder={"password"}/>
               <input type={"Password"} placeholder={"confirm password"}/>
