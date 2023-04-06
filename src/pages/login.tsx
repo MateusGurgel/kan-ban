@@ -1,33 +1,66 @@
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { UserService } from "@/services/user";
+import { useRouter } from "next/router";
+interface Inputs {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleOnChange() {
+  const router = useRouter();
 
-  }
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email, password } = data;
+
+    setIsLoading(true);
+    const response = await UserService.login(email, password);
+    setIsLoading(false);
+
+    if (response.errors) {
+      setErrorMessage(response.errors[0].message);
+      return;
+    }
+
+    UserService.token.set(response.token.token);
+    router.push("/dashboard");
+  };
 
   return (
     <div className={styles.loginContainer}>
-        <Head>
-          <title>Login</title>
-          <meta name="description" content="login of the kan-ban! aplication" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-  
-        <div className={styles.LoginCard}>
+      <Head>
+        <title>Login</title>
+        <meta name="description" content="login of the kan-ban! aplication" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-            <h1>Kan-Ban!</h1>
+      <div className={styles.LoginCard}>
+        <h1>Kan-Ban!</h1>
 
-            <form onSubmit={handleOnChange}>
-              <input type={"Email"} placeholder={"email@example.com"}/>
-              <input type={"Password"} placeholder={"password"}/>
-              <input type={"Submit"} defaultValue={"Submit"}/>
-            </form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type={"Email"}
+            placeholder={"email@example.com"}
+            {...register("email")}
+          />
+          <input
+            type={"Password"}
+            placeholder={"password"}
+            {...register("password")}
+          />
 
+          <p>{errorMessage}</p>
 
-        </div>
+          <input type={"Submit"} disabled={isLoading} defaultValue={"Submit"} />
+        </form>
+      </div>
     </div>
   );
 }

@@ -29,7 +29,12 @@
     margin-top: 15px;
 }
 
+.LoginCard form p{
+    margin-top: 20px;
+    color: red;
+}
+
 .LoginCard form input[type="submit"]{
-    margin-top: 35px;
+    margin-top: 20px;
 }
 
