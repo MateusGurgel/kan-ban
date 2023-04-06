@@ -1,27 +1,33 @@
 import styles from "../styles/Register.module.css";
 import Head from "next/head";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { register } from "@/services/register";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { UserService } from "@/services/user";
 import { useRouter } from "next/router";
-import { setToken } from "@/services/auth";
+import { useState } from "react";
+interface Inputs{
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
+  const { register, handleSubmit } = useForm<Inputs>();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
 
-  async function handleOnSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email, password, confirmPassword } = data;
 
     setErrorMessage("");
 
     setIsLoading(true);
-    const response = await register(email, password, confirmPassword);
+    const response = await UserService.register(
+      email,
+      password,
+      confirmPassword
+    );
     setIsLoading(false);
 
     if (response.errors) {
@@ -29,21 +35,9 @@ export default function Register() {
       return;
     }
 
-    setToken(response.token.token)
+    UserService.token.set(response.token.token);
     router.push("/dashboard");
-  }
-
-  function handleEmailChange(event: ChangeEvent<HTMLInputElement>) {
-    setEmail(event.target.value);
-  }
-
-  function handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
-    setPassword(event.target.value);
-  }
-
-  function handleConfirmPasswordChange(event: ChangeEvent<HTMLInputElement>) {
-    setConfirmPassword(event.target.value);
-  }
+  };
 
   return (
     <div className={styles.registerContainer}>
@@ -60,24 +54,21 @@ export default function Register() {
       <div className={styles.registerCard}>
         <h1>Kan-Ban!</h1>
 
-        <form onSubmit={handleOnSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <input
             type={"Email"}
             placeholder={"email@example.com"}
-            value={email}
-            onChange={handleEmailChange}
+            {...register("email")}
           />
           <input
             type={"Password"}
             placeholder={"password"}
-            value={password}
-            onChange={handlePasswordChange}
+            {...register("password")}
           />
           <input
             type={"Password"}
             placeholder={"confirm password"}
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
+            {...register("confirmPassword")}
           />
 
           <p>{errorMessage}</p>
