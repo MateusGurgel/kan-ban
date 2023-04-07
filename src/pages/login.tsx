@@ -27,7 +27,7 @@ export default function Login() {
       return;
     }
 
-    UserService.token.set(response.token.token);
+    UserService.token.set(response.token);
     router.push("/dashboard");
   };
 

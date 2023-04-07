@@ -1,25 +1,27 @@
-import AddButton from "@/components/addButton";
-import BlackLink from "@/components/blackLink";
 import { CreateKanBanModal } from "@/components/modals/createKanBanModal";
-import Head from "next/head";
-import Link from "next/link";
 import { useState } from "react";
 import styles from "../styles/Dashboard.module.css";
+import {useUserContext } from "@/contexts/UserContext";
+import AddButton from "@/components/addButton";
+import useAuth from "@/hooks/useAuth";
+import useSWR from 'swr'
+import fetcher from "@/fetcher";
+import Head from "next/head";
+import Link from "next/link";
+import { apiEndpoint } from "@/config";
 
 interface kanban {
   name: string;
   id: string;
 }
 
-const kanbansPlaceholder = [
-  { name: "Task", id: "123" },
-  { name: "Task", id: "1234" },
-  { name: "Task", id: "12345s" },
-];
 
 export default function Login() {
+  
+  useAuth()
+  
   const [showModal, setShowModal] = useState(false);
-  const [kanbans, setKanbans] = useState<kanban[]>(kanbansPlaceholder);
+  const [kanbans, setKanbans] = useState<kanban[]>([]);
 
   function callModal() {
     setShowModal(true);
@@ -43,7 +45,7 @@ export default function Login() {
         <h1>my kanbans</h1>
 
         {kanbans.map((kanban) => (
-          <Link key={"kanban"} href={`kanban/${kanban.id}`} style={{width: "100%"}}>
+          <Link key={kanban.id} href={`kanban/${kanban.id}`} style={{width: "100%"}}>
             <button> 
             {kanban.name}
             </button>

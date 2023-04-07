@@ -41,13 +41,30 @@ export class UserService {
     return result;
   }
 
+  static async getId() {
+
+    this.token.addInAuthorizationHeader()
+
+    const result = await api
+      .get("/getId")
+      .then((response) => response.data)
+      .catch((error) => error.response.data);
+
+    return result;
+  }
+
   static token = class {
     static get() {
       return localStorage.getItem("token");
     }
 
     static set(token: string) {
-      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("token", token);
+    }
+
+    static addInAuthorizationHeader() {
+      const authHeader = `bearer ${this.get()}`;
+      api.defaults.headers.common["Authorization"] = authHeader;
     }
   };
 }
