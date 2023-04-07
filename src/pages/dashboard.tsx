@@ -1,27 +1,26 @@
 import { CreateKanBanModal } from "@/components/modals/createKanBanModal";
-import { useState } from "react";
+import { useUserContext } from "@/contexts/UserContext";
 import styles from "../styles/Dashboard.module.css";
-import {useUserContext } from "@/contexts/UserContext";
 import AddButton from "@/components/addButton";
 import useAuth from "@/hooks/useAuth";
-import useSWR from 'swr'
-import fetcher from "@/fetcher";
+import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { apiEndpoint } from "@/config";
+import useSWR from "swr";
+import Kanban from "./kanban/[id]";
 
 interface kanban {
   name: string;
   id: string;
 }
 
-
 export default function Login() {
-  
-  useAuth()
-  
+  useAuth();
+
   const [showModal, setShowModal] = useState(false);
-  const [kanbans, setKanbans] = useState<kanban[]>([]);
+
+  const user = useUserContext();
+  const { data } = useSWR(`http://127.0.0.1:3333/users/${user.userID}/kanbans`);
 
   function callModal() {
     setShowModal(true);
@@ -44,11 +43,13 @@ export default function Login() {
       <div className={styles.dashboardCard}>
         <h1>my kanbans</h1>
 
-        {kanbans.map((kanban) => (
-          <Link key={kanban.id} href={`kanban/${kanban.id}`} style={{width: "100%"}}>
-            <button> 
-            {kanban.name}
-            </button>
+        {data && data.map((kanban : kanban) => (
+          <Link
+            key={kanban.id}
+            href={`kanban/${kanban.id}`}
+            style={{ width: "100%" }}
+          >
+            <button>{kanban.name}</button>
           </Link>
         ))}
         <AddButton onClick={callModal} />
