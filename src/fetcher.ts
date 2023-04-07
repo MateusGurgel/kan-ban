@@ -1,12 +1,7 @@
-import axios from 'axios';
-import { timeout } from './config';
+import { api } from './config';
 
 const fetcher = async (url: string) => {
-  const config = {
-    timeout: timeout,
-  };
-
-  const response = await axios.get(url, config);
+  const response = await api.get(url);
   return response.data;
 };
 
