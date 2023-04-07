@@ -1,14 +1,15 @@
 import styles from "../styles/Register.module.css";
 import Head from "next/head";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { UserService } from "@/services/user";
+import { UserService } from "@/services/UserService";
 import { useRouter } from "next/router";
 import { useState } from "react";
-interface Inputs{
+
+interface Inputs {
   email: string;
   password: string;
   confirmPassword: string;
-};
+}
 
 export default function Register() {
   const { register, handleSubmit } = useForm<Inputs>();
@@ -18,16 +19,10 @@ export default function Register() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { email, password, confirmPassword } = data;
-
     setErrorMessage("");
 
     setIsLoading(true);
-    const response = await UserService.register(
-      email,
-      password,
-      confirmPassword
-    );
+    const response = await UserService.register(data);
     setIsLoading(false);
 
     if (response.errors) {

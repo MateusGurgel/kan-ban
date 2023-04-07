@@ -1,8 +1,18 @@
-import { api } from "./../config";
+import { api } from "../config";
+
+interface registerProps {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface loginProps {
+  email: string;
+  password: string;
+}
 
 export class UserService {
-    static async register(email: string, password: string, confirmPassword: string) {
-
+  static async register({ email, password, confirmPassword }: registerProps) {
     const data = {
       email: email,
       password: password,
@@ -17,7 +27,7 @@ export class UserService {
     return result;
   }
 
-  static async login(email: string, password: string) {
+  static async login({ email, password }: loginProps) {
     const data = {
       email: email,
       password: password,

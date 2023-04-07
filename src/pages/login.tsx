@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Login.module.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { UserService } from "@/services/user";
+import { UserService } from "@/services/UserService";
 import { useRouter } from "next/router";
 interface Inputs {
   email: string;
@@ -17,10 +17,9 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { email, password } = data;
 
     setIsLoading(true);
-    const response = await UserService.login(email, password);
+    const response = await UserService.login(data);
     setIsLoading(false);
 
     if (response.errors) {
