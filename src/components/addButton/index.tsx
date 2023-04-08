@@ -1,6 +1,5 @@
 import styles from "./styles.module.css";
 import {BiPlus} from "react-icons/bi"
-import { ReactNode } from "react";
 
 interface AddButtonProps {
   onClick?: () => void;

@@ -2,12 +2,12 @@ import { CreateKanBanModal } from "@/components/modals/createKanBanModal";
 import { useUserContext } from "@/contexts/UserContext";
 import styles from "../styles/Dashboard.module.css";
 import AddButton from "@/components/addButton";
+import { Button } from "@/components/button";
 import useAuth from "@/hooks/useAuth";
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import useSWR from "swr";
-import Kanban from "./kanban/[id]";
 
 interface kanban {
   name: string;
@@ -49,7 +49,7 @@ export default function Login() {
             href={`kanban/${kanban.id}`}
             style={{ width: "100%" }}
           >
-            <button>{kanban.name}</button>
+            <Button>{kanban.name}</Button>
           </Link>
         ))}
         <AddButton onClick={callModal} />
