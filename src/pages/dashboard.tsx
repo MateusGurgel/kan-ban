@@ -4,7 +4,7 @@ import styles from "../styles/Dashboard.module.css";
 import AddButton from "@/components/addButton";
 import { Button } from "@/components/button";
 import useAuth from "@/hooks/useAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import useSWR from "swr";
@@ -21,6 +21,15 @@ export default function Login() {
 
   const user = useUserContext();
   const { data } = useSWR(`http://127.0.0.1:3333/users/${user.userID}/kanbans`);
+  const [kanbans, setKanbans] = useState<kanban[]>(data);
+
+  function addKanban(Kanban : kanban){
+    setKanbans(prev => [...prev, Kanban]);
+  }
+
+  useEffect(() => {
+    setKanbans(data);
+  }, [data]);
 
   function callModal() {
     setShowModal(true);
@@ -38,20 +47,21 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <CreateKanBanModal show={showModal} setShow={setShowModal} />
+      <CreateKanBanModal show={showModal} setShow={setShowModal} addKanban={addKanban} />
 
       <div className={styles.dashboardCard}>
         <h1>my kanbans</h1>
 
-        {data && data.map((kanban : kanban) => (
-          <Link
-            key={kanban.id}
-            href={`kanban/${kanban.id}`}
-            style={{ width: "100%" }}
-          >
-            <Button>{kanban.name}</Button>
-          </Link>
-        ))}
+        {kanbans &&
+          kanbans.map((kanban) => (
+            <Link
+              key={kanban.id}
+              href={`kanban/${kanban.id}`}
+              style={{ width: "100%" }}
+            >
+              <Button>{kanban.name}</Button>
+            </Link>
+          ))}
         <AddButton onClick={callModal} />
       </div>
     </div>
