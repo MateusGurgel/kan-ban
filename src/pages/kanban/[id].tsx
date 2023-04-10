@@ -2,10 +2,17 @@ import AddButton from "@/components/addButton";
 import Head from "next/head";
 import styles from "./../../styles/KanBan.module.css";
 import useIsMobile from "@/hooks/useIsMobile";
-import { DragDropContext, DropResult, resetServerContext } from "react-beautiful-dnd";
-import { useState } from "react";
+import {
+  DragDropContext,
+  DropResult,
+  resetServerContext,
+} from "react-beautiful-dnd";
+
+import useSWR from "swr";
+import { useEffect, useState } from "react";
 import { TaskList } from "@/components/taskList";
 import { CreateTaskModal } from "@/components/modals/createTaskModal";
+import { useRouter } from "next/router";
 
 function GetColumn(column: string) {
   switch (column) {
@@ -21,32 +28,71 @@ function GetColumn(column: string) {
   }
 }
 
-type task = {
+interface Task {
   id: string;
-  task: string;
-};
+  content: string;
+  field: "To do" | "In progress" | "Done";
+}
+
+interface RouteParams {
+  id: string;
+}
 
 export default function Kanban() {
   const isMobile = useIsMobile();
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data } = useSWR(`http://127.0.0.1:3333/kanbans/${id}/tasks/`);
+  const [tasks, setTasks] = useState<Task[]>(data);
 
   const kanban = {
-    "To do": useState<task[]>([
-      { id: "33412", task: "Task1" },
-      { id: "33122", task: "Task2" },
-    ]),
-    "In progress": useState<task[]>([
-      { id: "3341", task: "Task3" },
-      { id: "331722", task: "Task4" },
-    ]),
-    "Done": useState<task[]>([
-      { id: "334129", task: "Task5" },
-      { id: "3312210", task: "Task6" },
-    ]),
+    "To do": useState<Task[]>([]),
+    "In progress": useState<Task[]>([]),
+    "Done": useState<Task[]>([]),
   };
 
+  function sortTask(task: Task) {
+    switch (task.field) {
+      case "To do":
+        kanban["To do"][1]((prev) => [...prev, task]);
+        break;
+      case "In progress":
+        kanban["In progress"][1]((prev) => [...prev, task]);
+        break;
+      case "Done":
+        kanban["Done"][1]((prev) => [...prev, task]);
+        break;
+      default:
+        console.log("Invalid Destination");
+    }
+  }
+
+  useEffect(() => {
+    setTasks(data);
+
+    if (tasks){
+
+      kanban["Done"][1]([])
+      kanban["In progress"][1]([])
+      kanban["To do"][1]([])
+
+      tasks.map((task) => {
+        sortTask(task);
+      });
+
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, tasks]);
+
+  if (!id || typeof id !== "string") {
+    return null;
+  }
+
   function handleOnDragEnd(result: DropResult) {
-    
     if (!result.destination) return;
 
     const destination = result.destination.droppableId;
@@ -70,21 +116,17 @@ export default function Kanban() {
       destinationArray = sourceArray;
     }
 
-    //remove task from the src array
     const task = sourceArray.splice(result.source.index, 1);
 
-    //add on the dst array
     destinationArray.splice(result.destination.index, 0, ...task);
 
-    //save the arrays
     setDestinationColumn(destinationArray);
     setSourceColumn(sourceArray);
   }
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-
-      <CreateTaskModal setShow={setShowModal} show={showModal}/>
+      <CreateTaskModal setShow={setShowModal} show={showModal} kanbanId={id} />
 
       <div
         className={styles.kanban}
@@ -98,7 +140,7 @@ export default function Kanban() {
         </Head>
 
         <TaskList tasks={kanban["To do"][0]} title="To do">
-          <AddButton  onClick={() => setShowModal(true)}/>
+          <AddButton onClick={() => setShowModal(true)} />
         </TaskList>
 
         <TaskList tasks={kanban["In progress"][0]} title="In progress" />
@@ -109,11 +151,9 @@ export default function Kanban() {
 }
 
 export async function getServerSideProps() {
-  
-  resetServerContext()
-  
+  resetServerContext();
+
   return {
-    props: {
-    },
-  }
+    props: {},
+  };
 }

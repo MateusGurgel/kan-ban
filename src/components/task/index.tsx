@@ -8,6 +8,8 @@ interface TaskProps {
 }
 
 export function Task({ text, index, id }: TaskProps) {
+
+  console.log(text, index, id)
   return (
     <Draggable key={id} draggableId={id} index={index}>
       {(provided) => (

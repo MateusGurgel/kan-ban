@@ -3,8 +3,9 @@ import { Task } from "../task";
 import styles from "./styles.module.css";
 
 interface Task {
-  task: string;
   id: string;
+  content: string;
+  field: "To do" | "In progress" | "Done";
 }
 
 interface TaskListProps {
@@ -28,7 +29,7 @@ export function TaskList({ title, children, tasks }: TaskListProps) {
             {...provided.innerRef}
           >
             {tasks.map((task, index) => (
-              <Task key={task.id} id={task.id} text={task.task} index={index} />
+              <Task key={task.id.toString()} id={task.id.toString()} text={task.content} index={index} />
             ))}
 
             {provided.placeholder}
