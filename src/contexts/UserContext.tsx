@@ -18,6 +18,7 @@ export function UserProvider({ children }: UserProviderInterface) {
     const token = UserService.token.get();
 
     const getId = async () => {
+      UserService.token.addInAuthorizationHeader()
       const response = await UserService.getId();
 
       if (response.errors) {

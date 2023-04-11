@@ -43,8 +43,6 @@ export class UserService {
 
   static async getId() {
 
-    this.token.addInAuthorizationHeader()
-
     const result = await api
       .get("/getId")
       .then((response) => response.data)
