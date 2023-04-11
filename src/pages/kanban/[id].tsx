@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { CreateTaskModal } from "@/components/modals/createTaskModal";
 import { Task, taskService } from "@/services/TaskService";
 import { useEffect, useState } from "react";
+import useAuth from "@/hooks/useAuth";
 
 function GetColumn(column: string) {
   switch (column) {
@@ -30,13 +31,14 @@ function GetColumn(column: string) {
 }
 
 export default function Kanban() {
+  useAuth()
   const isMobile = useIsMobile();
   const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
   const { id: kanbanId } = router.query;
 
-  const { data } = useSWR(`http://127.0.0.1:3333/kanbans/${kanbanId}/tasks/`);
+  const { data } = useSWR(() => "http://127.0.0.1:3333/kanbans/" + kanbanId + "/tasks/");
   const [tasks, setTasks] = useState<Task[]>(data);
 
   const kanban = {
