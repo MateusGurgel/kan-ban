@@ -7,8 +7,10 @@ import { taskService } from "@/services/TaskService";
 
 interface CreateTaskModalProps {
   show: boolean;
-  setShow: Function;
   kanbanId: string;
+
+  setShow: Function;
+  addTask: Function;
 }
 
 interface Inputs {
@@ -17,15 +19,17 @@ interface Inputs {
 
 export function CreateTaskModal({
   show,
-  setShow,
   kanbanId,
+  setShow,
+  addTask,
 }: CreateTaskModalProps) {
   const { register, handleSubmit } = useForm<Inputs>();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+
     setIsLoading(true);
-    const response = await taskService.create(kanbanId, data.content);
+    const response = await taskService.create(kanbanId, data.content, 0);
     setIsLoading(false);
 
     if (response.errors) {
@@ -53,6 +57,8 @@ export function CreateTaskModal({
       progress: 0,
       theme: "light",
     });
+
+    addTask(response)
 
     setShow(false);
   };

@@ -24,6 +24,7 @@ export function CreateKanBanModal({ show, setShow, addKanban }: CreateKanBanModa
   const user = useUserContext();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+
     if (!user.userID) {
       return;
     }

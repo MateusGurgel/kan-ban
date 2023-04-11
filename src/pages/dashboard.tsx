@@ -21,6 +21,7 @@ export default function Login() {
 
   const user = useUserContext();
   const { data } = useSWR(`http://127.0.0.1:3333/users/${user.userID}/kanbans`);
+  
   const [kanbans, setKanbans] = useState<kanban[]>(data);
 
   function addKanban(Kanban : kanban){

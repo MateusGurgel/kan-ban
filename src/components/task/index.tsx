@@ -3,13 +3,12 @@ import { Draggable } from "react-beautiful-dnd";
 
 interface TaskProps {
   id: string;
-  text: string;
   index: number;
+  content: string;
 }
 
-export function Task({ text, index, id }: TaskProps) {
+export function Task({ content, index, id }: TaskProps) {
 
-  console.log(text, index, id)
   return (
     <Draggable key={id} draggableId={id} index={index}>
       {(provided) => (
@@ -18,8 +17,7 @@ export function Task({ text, index, id }: TaskProps) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-
-            <p>{text}</p>
+            <p>{content}</p>
         </li>
       )}
     </Draggable>
