@@ -14,11 +14,10 @@ const UserContext = createContext<UserContextValue>({ userID: null });
 export function UserProvider({ children }: UserProviderInterface) {
   const [userId, setUserId] = useState<number | null>(null);
 
+  const token = UserService.token.get();
   useEffect(() => {
-    const token = UserService.token.get();
-
     const getId = async () => {
-      UserService.token.addInAuthorizationHeader()
+      UserService.token.addInAuthorizationHeader();
       const response = await UserService.getId();
 
       if (response.errors) {
@@ -29,10 +28,17 @@ export function UserProvider({ children }: UserProviderInterface) {
       setUserId(response.id);
     };
 
-    if (token && !userId) {
-      getId();
+    if (!token) {
+      setUserId(null);
+      return;
     }
-  }, [userId]);
+
+    if (!userId) {
+      return;
+    }
+
+    getId();
+  }, [userId, token]);
 
   const value = {
     userID: userId,
@@ -41,6 +47,6 @@ export function UserProvider({ children }: UserProviderInterface) {
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
-export function useUserContext () {
-  return useContext(UserContext)
+export function useUserContext() {
+  return useContext(UserContext);
 }

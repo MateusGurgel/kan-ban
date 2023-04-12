@@ -1,5 +1,4 @@
 import { api } from "../config";
-
 interface registerProps {
   email: string;
   password: string;
@@ -27,6 +26,15 @@ export class UserService {
     return result;
   }
 
+  static async logout() {
+    UserService.token.remove();
+
+    await api
+      .post("/logout")
+      .then((response) => response.data)
+      .catch((error) => error.response.data);
+  }
+
   static async login({ email, password }: loginProps) {
     const data = {
       email: email,
@@ -42,7 +50,6 @@ export class UserService {
   }
 
   static async getId() {
-
     const result = await api
       .get("/getId")
       .then((response) => response.data)
@@ -58,6 +65,10 @@ export class UserService {
 
     static set(token: string) {
       localStorage.setItem("token", token);
+    }
+
+    static remove() {
+      localStorage.removeItem("token");
     }
 
     static addInAuthorizationHeader() {

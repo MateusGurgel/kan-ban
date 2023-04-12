@@ -14,7 +14,6 @@ import fetcher from "@/fetcher";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps, router }: AppProps) {
-  
   const SWRconfiguration = {
     refreshInterval: 3000,
     fetcher: fetcher,
@@ -22,20 +21,20 @@ export default function App({ Component, pageProps, router }: AppProps) {
 
   return (
     <div className={inter.className}>
-      <Layout>
-        <div className={styles.container}>
-          <SWRConfig value={SWRconfiguration}>
-            <UserProvider>
+      <UserProvider>
+        <Layout>
+          <div className={styles.container}>
+            <SWRConfig value={SWRconfiguration}>
               <AnimatePresence
                 mode="wait"
                 onExitComplete={() => window.scrollTo(0, 0)}
               >
                 <Component {...pageProps} key={router.asPath} />
               </AnimatePresence>
-            </UserProvider>
-          </SWRConfig>
-        </div>
-      </Layout>
+            </SWRConfig>
+          </div>
+        </Layout>
+      </UserProvider>
 
       <ToastContainer />
     </div>
