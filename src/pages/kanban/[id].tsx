@@ -31,14 +31,16 @@ function GetColumn(column: string) {
 }
 
 export default function Kanban() {
-  useAuth()
+  useAuth();
   const isMobile = useIsMobile();
   const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
   const { id: kanbanId } = router.query;
 
-  const { data } = useSWR(() => "http://127.0.0.1:3333/kanbans/" + kanbanId + "/tasks/");
+  const { data } = useSWR(
+    () => "http://127.0.0.1:3333/kanbans/" + kanbanId + "/tasks/"
+  );
   const [tasks, setTasks] = useState<Task[]>(data);
 
   const kanban = {
@@ -46,8 +48,9 @@ export default function Kanban() {
     "In progress": useState<Task[]>([]),
     "Done": useState<Task[]>([]),
   };
-  
+
   function sortTask(task: Task) {
+
     switch (task.field) {
       case "To do":
         kanban["To do"][1]((prev) => [...prev, task]);
@@ -59,26 +62,29 @@ export default function Kanban() {
         kanban["Done"][1]((prev) => [...prev, task]);
         break;
       default:
+        console.log(task.field)
         console.log("Invalid Destination");
     }
   }
 
   useEffect(() => {
     setTasks(data);
+  }, [data]);
 
-    if (tasks) {
-      kanban["Done"][1]([]);
-      kanban["In progress"][1]([]);
-      kanban["To do"][1]([]);
-
-      tasks.sort((a, b) => a.index - b.index);
-      tasks.map((task) => {
-        sortTask(task);
-      });
+  useEffect(() => {
+    if (!tasks) {
+      return
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, tasks]);
+    kanban["Done"][1]([]);
+    kanban["In progress"][1]([]);
+    kanban["To do"][1]([]);
+
+    tasks.sort((a, b) => a.index - b.index);
+    tasks.map((task) => sortTask(task));
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tasks]);
 
   function addTask(task: Task) {
     setTasks((prev) => [...prev, task]);
@@ -120,7 +126,11 @@ export default function Kanban() {
       return null;
     }
 
-    taskService.updateTaskList(kanbanId, destinationArray, destinationColumnName)
+    taskService.updateTaskList(
+      kanbanId,
+      destinationArray,
+      destinationColumnName
+    );
 
     setDestinationColumn(destinationArray);
     setSourceColumn(sourceArray);

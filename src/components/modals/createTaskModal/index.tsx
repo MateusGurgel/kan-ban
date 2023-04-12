@@ -32,6 +32,9 @@ export function CreateTaskModal({
     const response = await taskService.create(kanbanId, data.content, 0);
     setIsLoading(false);
 
+    response.field = "To do";
+
+
     if (response.errors) {
       toast.error("An error has occurred, try again later", {
         position: "top-right",
