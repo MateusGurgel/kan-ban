@@ -25,12 +25,12 @@ export function CreateKanBanModal({ show, setShow, addKanban }: CreateKanBanModa
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
 
-    if (!user.userID) {
+    if (!user.id) {
       return;
     }
 
     setIsLoading(true);
-    const response = await KanbanService.create(user.userID, data.name);
+    const response = await KanbanService.create(user.id, data.name);
     setIsLoading(false);
 
     if (response.errors) {

@@ -7,6 +7,16 @@ import { UserService } from "@/services/UserService";
 export function NavBar() {
   const user = useUserContext();
 
+  function handleLogout() {
+    if (!user.setId) {
+      return;
+    }
+
+    UserService.logout();
+
+    user.setId(null);
+  }
+
   return (
     <header className={styles.header}>
       <section className={styles.content}>
@@ -14,7 +24,7 @@ export function NavBar() {
           <h1>Kan-Ban!</h1>
         </Link>
 
-        {!user.userID ? (
+        {!user.id ? (
           <nav>
             <Link href={"/login"}>
               <p>Log in</p>
@@ -25,13 +35,13 @@ export function NavBar() {
           </nav>
         ) : (
           <nav>
-          <Link  href={"/"} onClick={UserService.logout}>
-          <p>Log out</p>
-          </Link>
-          <BlackLink href={"/dashboard"}>
-            <p>DashBoard</p>
-          </BlackLink>
-        </nav>
+            <Link href={"/"} onClick={handleLogout}>
+              <p>Log out</p>
+            </Link>
+            <BlackLink href={"/dashboard"}>
+              <p>DashBoard</p>
+            </BlackLink>
+          </nav>
         )}
       </section>
     </header>

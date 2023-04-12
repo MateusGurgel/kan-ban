@@ -1,21 +1,28 @@
-import { createContext, useEffect, useState, useContext } from "react";
+import { createContext, useEffect, useState, useContext, Dispatch, SetStateAction } from "react";
 import { UserService } from "@/services/UserService";
+import { useRouter } from "next/router";
 
 interface UserContextValue {
-  userID: number | null;
+  id: number | null;
+  setId: Dispatch<SetStateAction<number | null>> | null;
 }
 
 interface UserProviderInterface {
   children: React.ReactNode;
 }
 
-const UserContext = createContext<UserContextValue>({ userID: null });
+const UserContext = createContext<UserContextValue>({ id: null , setId: null});
 
 export function UserProvider({ children }: UserProviderInterface) {
   const [userId, setUserId] = useState<number | null>(null);
+  const router = useRouter();
+  const path = router.asPath
 
-  const token = UserService.token.get();
   useEffect(() => {
+    console.log("Brabor")
+    
+    const token = UserService.token.get()
+
     const getId = async () => {
       UserService.token.addInAuthorizationHeader();
       const response = await UserService.getId();
@@ -33,15 +40,16 @@ export function UserProvider({ children }: UserProviderInterface) {
       return;
     }
 
-    if (!userId) {
+    if (userId) {
       return;
     }
 
     getId();
-  }, [userId, token]);
+  }, [userId, path]);
 
   const value = {
-    userID: userId,
+    id: userId,
+    setId: setUserId,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
