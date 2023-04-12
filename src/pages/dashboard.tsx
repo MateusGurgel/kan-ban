@@ -20,7 +20,7 @@ export default function Login() {
   const [showModal, setShowModal] = useState(false);
 
   const user = useUserContext();
-  const { data } = useSWR(() => "http://127.0.0.1:3333/users/" + user.id + "/kanbans");
+  const { data } = useSWR(() => "/users/" + user.id + "/kanbans");
   
   const [kanbans, setKanbans] = useState<kanban[]>(data);
 
