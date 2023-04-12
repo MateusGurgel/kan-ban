@@ -57,8 +57,6 @@ export class taskService {
       tasks: taskList,
     }
 
-    console.log("brabo")
-
     const result = await api
       .patch(`kanbans/${kanbanId}/tasks`, data)
       .then((response) => response.data)
