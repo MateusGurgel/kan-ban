@@ -5,11 +5,12 @@ import { ReactNode } from "react";
 interface BlackLinkProps {
   href: string;
   children: ReactNode;
+  onClick?: () => void;
 }
 
-export default function BlackLink({ href, children }: BlackLinkProps) {
+export default function BlackLink({ href, children, onClick }: BlackLinkProps) {
   return (
-    <Link href={href} className={styles.blackLink}>
+    <Link href={href} className={styles.blackLink} onClick={onClick}>
       {children}
     </Link>
   );
