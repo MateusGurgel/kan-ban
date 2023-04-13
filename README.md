@@ -1,5 +1,6 @@
-![Logo](https://github.com/MateusGurgel/kan-ban/blob/main/demo/Kanban_Logo.png)
-
+<div align="center">
+  <img src="https://github.com/MateusGurgel/kan-ban/blob/main/demo/Kanban_Logo.png" />
+</div>
 
 # Kan-ban! | Front-end
 
