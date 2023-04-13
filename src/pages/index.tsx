@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import kanBan from "../../public/KanBan.png";
+import mobileKanBan from "../../public/MobileKanban.jpeg";
+
 import styles from "../styles/Home.module.css";
 import useIsMobile  from "@/hooks/useIsMobile";
 import BlackLink from "@/components/blackLink";
@@ -61,7 +63,7 @@ export default function Home() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          {!isMobile && (
+          {!isMobile ? (
             <Image
               priority
               className={styles.image}
@@ -70,7 +72,18 @@ export default function Home() {
               src={kanBan}
               alt="KanBan Photo"
             />
-          )}
+          ) : 
+          (
+            <Image
+            priority
+            className={styles.image}
+            width={164}
+            height={320}
+            src={mobileKanBan}
+            alt="KanBan Photo"
+            />
+          )
+        }
         </motion.div>
       </motion.article>
     </>

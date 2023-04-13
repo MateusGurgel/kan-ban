@@ -81,7 +81,7 @@ export function CreateTaskModal({
         </label>
 
         <label>
-          <input type={"Submit"} disabled={isLoading} defaultValue={"Submit"} />
+          <input type={"Submit"} disabled={isLoading} defaultValue={"Create"} />
         </label>
       </form>
     </Modal>

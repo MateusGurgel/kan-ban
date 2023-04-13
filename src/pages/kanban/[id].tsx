@@ -39,7 +39,7 @@ export default function Kanban() {
   const { id: kanbanId } = router.query;
 
   const { data } = useSWR(
-    () => "http://127.0.0.1:3333/kanbans/" + kanbanId + "/tasks/"
+    () => "/kanbans/" + kanbanId + "/tasks/"
   );
   const [tasks, setTasks] = useState<Task[]>(data);
 
