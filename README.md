@@ -17,7 +17,6 @@ The Kanban! project is a responsive web application that enables users to create
 ![App Screenshot](https://github.com/MateusGurgel/kan-ban/blob/main/demo/ScreenShot_2.png)
 ![App Screenshot](https://github.com/MateusGurgel/kan-ban/blob/main/demo/ScreenShot_3.png)
 ![App Screenshot](https://github.com/MateusGurgel/kan-ban/blob/main/demo/ScreenShot_4.png)
-![App Screenshot](https://github.com/MateusGurgel/kan-ban/blob/main/demo/ScreenShot_5.png)
 
 ## Run Locally
 
