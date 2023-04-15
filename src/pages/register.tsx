@@ -68,7 +68,7 @@ export default function Register() {
 
           <p>{errorMessage}</p>
 
-          <input type={"Submit"} disabled={isLoading} value={isLoading ? "Loading..." : "Register"} />
+          <input type={"Submit"} disabled={isLoading} defaultValue={isLoading ? "Loading..." : "Register"} />
 
         </form>
       </div>

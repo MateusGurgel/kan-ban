@@ -57,7 +57,7 @@ export default function Login() {
 
           <p>{errorMessage}</p>
 
-          <input type={"Submit"} disabled={isLoading} value={isLoading ? "Loading..." : "Login"} />
+          <input type={"Submit"} disabled={isLoading} defaultValue={isLoading ? "Loading..." : "Login"} />
         </form>
       </div>
     </div>
