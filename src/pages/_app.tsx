@@ -33,10 +33,9 @@ export default function App({ Component, pageProps, router }: AppProps) {
               </AnimatePresence>
             </SWRConfig>
           </div>
+          <ToastContainer/>
         </Layout>
       </UserProvider>
-
-      <ToastContainer />
     </div>
   );
 }

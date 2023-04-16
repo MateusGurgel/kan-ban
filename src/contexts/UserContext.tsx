@@ -19,7 +19,6 @@ export function UserProvider({ children }: UserProviderInterface) {
   const path = router.asPath
 
   useEffect(() => {
-    console.log("Brabor")
     
     const token = UserService.token.get()
 

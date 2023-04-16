@@ -84,7 +84,7 @@ export function CreateKanBanModal({ show, setShow, addKanban }: CreateKanBanModa
         </label>
 
         <label>
-          <input type={"Submit"} defaultValue={"Create"} />
+          <input type={"Submit"} disabled={isLoading} value={isLoading ? "Loading..." : "Create"} />
         </label>
       </form>
     </Modal>

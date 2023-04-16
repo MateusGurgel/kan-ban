@@ -54,3 +54,9 @@ input[type="submit"]:hover {
   background: #fff;
   color: black;
 }
+
+input[type="submit"]:disabled {
+  background: #000000;
+  color: white;
+  transition: 0.4s;
+}
