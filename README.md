@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center" border>
   <img src="https://github.com/MateusGurgel/kan-ban/blob/main/demo/Kanban_Logo.png" />
 </div>
 
